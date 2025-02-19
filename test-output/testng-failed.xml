@@ -5,8 +5,7 @@
     <classes>
       <class name="com.message.NumberSearch">
         <methods>
-          <include name="Search" invocation-numbers="0 1"/>
-          <include name="plus"/>
+          <include name="Search"/>
           <include name="launch"/>
         </methods>
       </class> <!-- com.message.NumberSearch -->

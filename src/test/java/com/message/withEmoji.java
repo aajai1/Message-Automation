@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.Duration;
 
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.StaleElementReferenceException;
@@ -15,9 +14,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class NumberSearch {
+public class withEmoji {
 	WebDriver driver;
 	WebDriverWait wait;
 //
@@ -37,20 +37,25 @@ public class NumberSearch {
 		Thread.sleep(35000);
 	}
 
+@DataProvider(name = "nameData")
+public static Object[][] values()
+{
+	
+	return Data.datas();
+	}
 
-
-	@Test
-	public void Search () throws IOException {
+	@Test(dataProvider = "nameData")
+	public void Search (String name,String message) throws IOException {
 		
-		File file = new File("./Names.xlsx");
+		File file = new File("C:\\Users\\acer\\Desktop\\Names.xlsx");
 		FileInputStream fileBytes = new FileInputStream(file);
 		XSSFWorkbook workBook= new XSSFWorkbook(fileBytes);
-		XSSFSheet sheet =workBook.getSheetAt(0);
+		//XSSFSheet sheet =workBook.getSheetAt(0);
 		
-		for (int i = 1; i < sheet.getPhysicalNumberOfRows(); i++) {
-			String names = sheet.getRow(i).getCell(0).getStringCellValue();
-			String message= sheet.getRow(i).getCell(1).getStringCellValue();
-			 message = message.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
+		
+			//String names = sheet.getRow(i).getCell(0).getStringCellValue();
+			//String message= sheet.getRow(i).getCell(1).getStringCellValue();
+			// message = message.replaceAll("\r\n", "\n").replaceAll("\r", "\n");
 
 		
 	
@@ -60,7 +65,7 @@ public class NumberSearch {
 			plus.click();
 			WebElement search = driver.findElement(By.xpath("/html[1]/body[1]/div[1]/div[1]/div[1]/div[3]/div[1]/div[2]/div[1]/span[1]/div[1]/span[1]/div[1]/div[1]/div[2]/div[2]/div[1]/div[1]/p[1]"));
 			wait.until(ExpectedConditions.elementToBeClickable(search));
-			search.sendKeys(names);
+			search.sendKeys(name);
 			try 
 			{
 				WebElement searchResult = driver.findElement(By.xpath("//*[@id=\"app\"]/div/div[3]/div/div[2]/div[1]/span/div/span/div/div[2]/div/div/div/div[2]"));
@@ -83,6 +88,7 @@ public class NumberSearch {
 
 			}
 			workBook.close();
+			
 		}
 	}
 
@@ -91,4 +97,3 @@ public class NumberSearch {
 
 
 
-}
